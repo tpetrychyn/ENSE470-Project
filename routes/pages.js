@@ -13,6 +13,14 @@ router.get('/create-application', isLoggedIn, (req, res, next) => {
   })
 })
 
+router.get('/approver-applications', isLoggedIn, (req, res, next) => {
+  res.render('approvers/view-applications', {
+    page: 'view-applications'
+  })
+})
+
+
+
 router.get('/view-applications', isLoggedIn, (req, res, next) => {
   let alert = null
   const message = req.flash('alertMessage')
