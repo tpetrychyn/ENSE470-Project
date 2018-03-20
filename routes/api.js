@@ -16,7 +16,6 @@ router.get('/approvers', isLoggedIn, function (req, res, next) {
   models.Approvers.findAll({
     include: [models.Software]
   }).then(approvers => {
-    // map entity to json
     approvers.map(app => app.toJSON())
     res.send(approvers)
   })
@@ -61,7 +60,7 @@ function findApproverApplications (user, callback) {
 
       models.Applications.findAll({
         where: { software_id: softwareIds },
-        include: [models.User]
+        include: [models.User, models.Software]
       })
         .then(applications => {
           applications.map(app => app.toJSON())
