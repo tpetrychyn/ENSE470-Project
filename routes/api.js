@@ -23,16 +23,52 @@ router.get('/approvers', isLoggedIn, function (req, res, next) {
 })
 
 router.get('/applications', isLoggedIn, function (req, res, next) {
-  let filter = {}
   if (req.user.type === 'user') {
-    filter = { user_id: req.user.id }
-  }
-  models.Applications.findAll({ where: filter, include: [models.Software] })
-    .then(applications => {
-      applications.map(app => app.toJSON())
+    findUserApplications(req.user, applications => {
       res.send(applications)
     })
+  }
+  if (req.user.type === 'approver') {
+    findApproverApplications(req.user, applications => {
+      res.send(applications)
+    })
+  }
 })
+
+function findUserApplications (user, callback) {
+  models.Applications.findAll({
+    where: { user_id: user.id },
+    include: [models.Software]
+  })
+    .then(applications => {
+      applications.map(app => app.toJSON())
+      callback(applications)
+    })
+}
+
+function findApproverApplications (user, callback) {
+  models.Approvers.findOne({
+    where: { first_name: user.first_name, last_name: user.last_name },
+    include: [models.Software]
+  })
+    .then(approver => {
+      if (approver == null) {
+        callback(null)
+        return
+      }
+
+      const softwareIds = approver.Software.map(soft => soft.toJSON().id)
+
+      models.Applications.findAll({
+        where: { software_id: softwareIds },
+        include: [models.User]
+      })
+        .then(applications => {
+          applications.map(app => app.toJSON())
+          callback(applications)
+        })
+    })
+}
 
 router.post('/applications', isLoggedIn, (req, res, next) => {
   let newApp = {}

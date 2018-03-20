@@ -45,12 +45,14 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Messages (0)</a>
           </li>
-          <li class="nav-item {{#ifEquals page 'create-application'}}active{{/ifEquals}}">
-            <a class="nav-link" href="/create-application">Create Application</a>
-          </li>
-          <li class="nav-item {{#ifEquals page 'view-applications'}}active{{/ifEquals}}">
-            <a class="nav-link" href="/view-applications">My Applications</a>
-          </li>
+          {{#ifEquals user.type 'user'}}
+            <li class="nav-item {{#ifEquals page 'create-application'}}active{{/ifEquals}}">
+              <a class="nav-link" href="/create-application">Create Application</a>
+            </li>
+            <li class="nav-item {{#ifEquals page 'view-applications'}}active{{/ifEquals}}">
+              <a class="nav-link" href="/view-applications">My Applications</a>
+            </li>
+          {{/ifEquals}}
         </ul>
         <span class="dropdown nav-item">
           <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
