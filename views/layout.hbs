@@ -47,9 +47,9 @@
           <li class="nav-item {{#ifEquals page 'home'}}active{{/ifEquals}}">
             <a class="nav-link" href="/">Home</a>
           </li>
-          <li class="nav-item">
+          {{!-- <li class="nav-item">
             <a class="nav-link" href="#">Messages (0)</a>
-          </li>
+          </li> --}}
           {{#ifEquals user.type 'user'}}
             <li class="nav-item {{#ifEquals page 'create-application'}}active{{/ifEquals}}">
               <a class="nav-link" href="/create-application">Create Application</a>

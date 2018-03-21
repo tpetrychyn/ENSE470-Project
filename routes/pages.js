@@ -17,6 +17,13 @@ router.get('/', isLoggedIn, (req, res, next) => {
   })
 })
 
+router.get('/profile', isLoggedIn, (req, res, next) => {
+  res.render('profile', {
+    page: 'profile',
+    user: req.user
+  })
+})
+
 router.get('/create-application', isLoggedIn, (req, res, next) => {
   res.render('users/create-application', {
     page: 'create-application'
