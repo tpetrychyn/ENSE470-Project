@@ -135,10 +135,21 @@ router.post('/applications/approve', isLoggedIn, (req, res, next) => {
             req.flash('alertType', 'success')
             req.flash('alertMessage', 'Application approved.')
             res.redirect('/view-applications')
+
+            notifyAnalysts(application.User, application.Software)
           })
         })
     })
 })
+
+function notifyAnalysts (user, software) {
+  models.User.findAll({ where: { type: 'analyst' } })
+    .then(analysts => {
+      analysts.forEach(analyst => {
+        sendMail(analyst.email, 'New Application', `A new approved application for ${user.first_name} ${user.last_name} - ${software.name} has been added.`)
+      })
+    })
+}
 
 router.post('/applications/grant', isLoggedIn, (req, res, next) => {
   const id = req.body.applicationId
