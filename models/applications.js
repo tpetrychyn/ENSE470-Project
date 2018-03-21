@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     models.Applications.belongsTo(models.Software, {
       foreignKey: 'software_id'
     })
+
+    models.Applications.belongsTo(models.Approvers, {
+      foreignKey: 'approver_id'
+    })
   }
 
   return Applications

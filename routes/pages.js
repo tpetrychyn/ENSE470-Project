@@ -2,7 +2,17 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', isLoggedIn, (req, res, next) => {
-  res.render('index', {
+  let pageName = 'login'
+  if (req.user.type === 'user') {
+    pageName = 'users/home'
+  }
+  if (req.user.type === 'approver') {
+    pageName = 'approvers/home'
+  }
+  if (req.user.type === 'analyst') {
+    pageName = 'analysts/home'
+  }
+  res.render(pageName, {
     page: 'home'
   })
 })
@@ -13,15 +23,15 @@ router.get('/create-application', isLoggedIn, (req, res, next) => {
   })
 })
 
-router.get('/approver-applications', isLoggedIn, (req, res, next) => {
-  res.render('approvers/view-applications', {
-    page: 'view-applications'
-  })
-})
-
-
-
 router.get('/view-applications', isLoggedIn, (req, res, next) => {
+  let pageName = ''
+  if (req.user.type === 'user') {
+    pageName = 'users/view-applications'
+  } else if (req.user.type === 'approver') {
+    pageName = 'approvers/view-applications'
+  } else if (req.user.type === 'analyst') {
+    pageName = 'analysts/view-applications'
+  }
   let alert = null
   const message = req.flash('alertMessage')
   if (message.length > 0) {
@@ -30,7 +40,7 @@ router.get('/view-applications', isLoggedIn, (req, res, next) => {
       message: message
     }
   }
-  res.render('users/view-applications', {
+  res.render(pageName, {
     alert: alert,
     page: 'view-applications'
   })

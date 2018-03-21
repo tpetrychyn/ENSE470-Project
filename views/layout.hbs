@@ -26,10 +26,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
       crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
   </head>
   
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light
+    {{#ifEquals user.type 'user'}}navbar-user{{/ifEquals}}
+    {{#ifEquals user.type 'approver'}}navbar-approver{{/ifEquals}}
+    {{#ifEquals user.type 'analyst'}}navbar-analyst{{/ifEquals}}
+    ">
       <a class="navbar-brand" href="/">HELL</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +54,10 @@
             <li class="nav-item {{#ifEquals page 'create-application'}}active{{/ifEquals}}">
               <a class="nav-link" href="/create-application">Create Application</a>
             </li>
-            <li class="nav-item {{#ifEquals page 'view-applications'}}active{{/ifEquals}}">
-              <a class="nav-link" href="/view-applications">My Applications</a>
-            </li>
-          {{/ifEquals}}
+             {{/ifEquals}}
+          <li class="nav-item {{#ifEquals page 'view-applications'}}active{{/ifEquals}}">
+            <a class="nav-link" href="/view-applications">View Applications</a>
+          </li>
         </ul>
         <span class="dropdown nav-item">
           <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"

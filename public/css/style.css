@@ -5,8 +5,16 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-.navbar {
+.navbar-user {
   border-top: 4px solid #ffc107!important;
+}
+
+.navbar-approver {
+  border-top: 4px solid #28a745!important;
+}
+
+.navbar-analyst {
+  border-top: 4px solid #17a2b8!important;
 }
 
 .card-footer {
